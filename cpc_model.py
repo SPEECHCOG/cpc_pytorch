@@ -133,16 +133,16 @@ class CPC_encoder_mlp(Module):
                  linear_3_output_dim = 512,
                  num_norm_features_3 = 512,
                  use_normalization = True,
-                 normalization = 'batchnorm',
+                 normalization_type = 'batchnorm',
                  use_dropout = True,
                  dropout = 0.2):
 
         super(CPC_encoder_mlp, self).__init__()
         
-        if normalization == 'batchnorm':
+        if normalization_type == 'batchnorm':
             normalization_layer = BatchNorm1d
         else:
-            sys.exit(f'Wrong value for argument "normalization": {normalization}')
+            sys.exit(f'Wrong value for argument "normalization_type": {normalization_type}')
         
         self.linear_layer_1 = Linear(in_features=linear_1_input_dim,
                               out_features=linear_1_output_dim)
