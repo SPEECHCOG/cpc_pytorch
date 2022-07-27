@@ -10,7 +10,7 @@ The subparts of the CPC model (encoder, autoregressive model, postnet).
 import numpy as np
 import sys
 from torch import stack
-from torch.nn import Module, Linear, ReLU, Conv1d, BatchNorm1d, Conv2d, BatchNorm2d, MaxPool2d, Dropout, GRU, ModuleList, ELU
+from torch.nn import Module, Linear, ReLU, Conv1d, BatchNorm1d, Dropout, GRU, ModuleList, ELU, Identity
 
 
 
@@ -114,7 +114,6 @@ class CPC_encoder_mlp(Module):
                  linear_3_input_dim = 512,
                  linear_3_output_dim = 512,
                  num_norm_features_3 = 512,
-                 use_normalization = True,
                  normalization_type = 'batchnorm',
                  dropout = 0.2):
 
@@ -122,6 +121,8 @@ class CPC_encoder_mlp(Module):
         
         if normalization_type == 'batchnorm':
             normalization_layer = BatchNorm1d
+        elif normalization_type == None:
+            normalization_layer = Identity
         else:
             sys.exit(f'Wrong value for argument "normalization_type": {normalization_type}')
         
@@ -137,9 +138,7 @@ class CPC_encoder_mlp(Module):
                               out_features=linear_3_output_dim)
         self.normalization_3 = normalization_layer(num_norm_features_3)
         
-        
         self.non_linearity_elu = ELU()
-        self.use_normalization = use_normalization
         self.dropout = Dropout(dropout)
 
 
@@ -151,21 +150,9 @@ class CPC_encoder_mlp(Module):
         # We go through each timestep and produce an encoding
         for i in range(X.size()[1]):
             X_frame = X[:, i, :]
-            if self.use_normalization:
-                X_frame = self.dropout(self.non_linearity_elu(self.normalization_1(self.linear_layer_1(X_frame))))
-            else:
-                X_frame = self.dropout(self.non_linearity_elu(self.linear_layer_1(X_frame)))
-            
-            if self.use_normalization:
-                X_frame = self.dropout(self.non_linearity_elu(self.normalization_2(self.linear_layer_2(X_frame))))
-            else:
-                X_frame = self.dropout(self.non_linearity_elu(self.linear_layer_2(X_frame)))
-            
-            if self.use_normalization:
-                X_frame = self.dropout(self.non_linearity_elu(self.normalization_3(self.linear_layer_3(X_frame))))
-            else:
-                X_frame = self.dropout(self.non_linearity_elu(self.linear_layer_3(X_frame)))
-            
+            X_frame = self.dropout(self.non_linearity_elu(self.normalization_1(self.linear_layer_1(X_frame))))
+            X_frame = self.dropout(self.non_linearity_elu(self.normalization_2(self.linear_layer_2(X_frame))))
+            X_frame = self.dropout(self.non_linearity_elu(self.normalization_3(self.linear_layer_3(X_frame))))
             X_output.append(X_frame)
         
         X_output = stack(X_output, dim=1)

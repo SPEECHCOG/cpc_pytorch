@@ -11,7 +11,7 @@ The configuration file for train_cpc_model.py.
 # The hyperparameters for our training and testing process
 max_epochs = 10000
 patience = 100
-dropout = 0.2
+dropout = 0.3
 batch_size = 8
 learning_rate = 1e-4
 
@@ -82,15 +82,13 @@ ar_best_model_name = 'CPC_AR_mlp_best_model.pt'
 w_best_model_name = 'W_mlp_best_model.pt'
 
 # The hyperparameters for constructing the models.
-encoder_params = {'linear_1_output_dim': 256,
-                  'num_norm_features_1': 256,
+encoder_params = {'linear_1_input_dim': 40,
+                  'linear_1_output_dim': 256,
                   'linear_2_input_dim': 256,
                   'linear_2_output_dim': 256,
-                  'num_norm_features_2': 256,
                   'linear_3_input_dim': 256,
                   'linear_3_output_dim': 256,
-                  'num_norm_features_3': 256,
-                  'use_normalization': False,
+                  'normalization_type': None,
                   'dropout': dropout}
 ar_model_params = {'encoding_dim': 256,
                    'output_dim': 256}
