@@ -11,7 +11,7 @@ The configuration file for train_cpc_model.py using the original CPC implementat
 # The hyperparameters for our training and testing process
 max_epochs = 10000
 patience = 100
-dropout = 0.3
+dropout = 0.0
 batch_size = 8
 learning_rate = 1e-4
 
