@@ -91,7 +91,6 @@ encoder_params = {'linear_1_output_dim': 256,
                   'linear_3_output_dim': 256,
                   'num_norm_features_3': 256,
                   'use_normalization': False,
-                  'use_dropout': True,
                   'dropout': dropout}
 ar_model_params = {'encoding_dim': 256,
                    'output_dim': 256}

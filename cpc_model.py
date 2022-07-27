@@ -52,8 +52,7 @@ class CPC_encoder(Module):
                  conv_5_stride = 2,
                  conv_5_padding = 1,
                  num_norm_features_5 = 512,
-                 use_dropout = False,
-                 dropout = 0.2):
+                 dropout = 0.0):
 
         super(CPC_encoder, self).__init__()
 
@@ -78,8 +77,6 @@ class CPC_encoder(Module):
         self.batch_normalization_5 = BatchNorm1d(num_norm_features_5)
         
         self.non_linearity_relu = ReLU()
-        
-        self.use_dropout = use_dropout
         self.dropout = Dropout(dropout)
 
 
@@ -89,26 +86,11 @@ class CPC_encoder(Module):
         # by adding a dummy dimension (number of channels)
         # --> with default values from torch.Size([8, 20480]) into torch.Size([8, 1, 20480])
         X = X.unsqueeze(1)
-        
-        X = self.non_linearity_relu(self.batch_normalization_1(self.conv_layer_1(X)))
-        if self.use_dropout:
-            X = self.dropout(X)
-        
-        X = self.non_linearity_relu(self.batch_normalization_2(self.conv_layer_2(X)))
-        if self.use_dropout:
-            X = self.dropout(X)
-            
-        X = self.non_linearity_relu(self.batch_normalization_3(self.conv_layer_3(X)))
-        if self.use_dropout:
-            X = self.dropout(X)
-            
-        X = self.non_linearity_relu(self.batch_normalization_4(self.conv_layer_4(X)))
-        if self.use_dropout:
-            X = self.dropout(X)
-            
-        X = self.non_linearity_relu(self.batch_normalization_5(self.conv_layer_5(X)))
-        if self.use_dropout:
-            X = self.dropout(X)
+        X = self.dropout(self.non_linearity_relu(self.batch_normalization_1(self.conv_layer_1(X))))
+        X = self.dropout(self.non_linearity_relu(self.batch_normalization_2(self.conv_layer_2(X))))
+        X = self.dropout(self.non_linearity_relu(self.batch_normalization_3(self.conv_layer_3(X))))
+        X = self.dropout(self.non_linearity_relu(self.batch_normalization_4(self.conv_layer_4(X))))
+        X = self.dropout(self.non_linearity_relu(self.batch_normalization_5(self.conv_layer_5(X))))
         # X is now of size [batch_size, conv_5_out_dim, num_frames_encoding]
         # --> with default values torch.Size([8, 512, 128])
         
@@ -134,7 +116,6 @@ class CPC_encoder_mlp(Module):
                  num_norm_features_3 = 512,
                  use_normalization = True,
                  normalization_type = 'batchnorm',
-                 use_dropout = True,
                  dropout = 0.2):
 
         super(CPC_encoder_mlp, self).__init__()
@@ -159,7 +140,6 @@ class CPC_encoder_mlp(Module):
         
         self.non_linearity_elu = ELU()
         self.use_normalization = use_normalization
-        self.use_dropout = use_dropout
         self.dropout = Dropout(dropout)
 
 
@@ -172,25 +152,19 @@ class CPC_encoder_mlp(Module):
         for i in range(X.size()[1]):
             X_frame = X[:, i, :]
             if self.use_normalization:
-                X_frame = self.non_linearity_elu(self.normalization_1(self.linear_layer_1(X_frame)))
+                X_frame = self.dropout(self.non_linearity_elu(self.normalization_1(self.linear_layer_1(X_frame))))
             else:
-                X_frame = self.non_linearity_elu(self.linear_layer_1(X_frame))
-            if self.use_dropout:
-                X_frame = self.dropout(X_frame)
+                X_frame = self.dropout(self.non_linearity_elu(self.linear_layer_1(X_frame)))
             
             if self.use_normalization:
-                X_frame = self.non_linearity_elu(self.normalization_2(self.linear_layer_2(X_frame)))
+                X_frame = self.dropout(self.non_linearity_elu(self.normalization_2(self.linear_layer_2(X_frame))))
             else:
-                X_frame = self.non_linearity_elu(self.linear_layer_2(X_frame))
-            if self.use_dropout:
-                X_frame = self.dropout(X_frame)
+                X_frame = self.dropout(self.non_linearity_elu(self.linear_layer_2(X_frame)))
             
             if self.use_normalization:
-                X_frame = self.non_linearity_elu(self.normalization_3(self.linear_layer_3(X_frame)))
+                X_frame = self.dropout(self.non_linearity_elu(self.normalization_3(self.linear_layer_3(X_frame))))
             else:
-                X_frame = self.non_linearity_elu(self.linear_layer_3(X_frame))
-            if self.use_dropout:
-                X_frame = self.dropout(X_frame)
+                X_frame = self.dropout(self.non_linearity_elu(self.linear_layer_3(X_frame)))
             
             X_output.append(X_frame)
         

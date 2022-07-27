@@ -83,8 +83,7 @@ w_best_model_name = 'W_best_model.pt'
 
 # The hyperparameters for constructing the models. An empty dictionary will make the model to use
 # only default hyperparameters, i.e., the hyperparameters of the original CPC paper
-encoder_params = {'use_dropout': True,
-                  'dropout': dropout}
+encoder_params = {'dropout': dropout}
 ar_model_params = {}
 w_params = {}
 
