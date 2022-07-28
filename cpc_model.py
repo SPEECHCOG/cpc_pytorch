@@ -54,7 +54,7 @@ class CPC_encoder(Module):
                  num_norm_features_5 = 512,
                  dropout = 0.0):
 
-        super(CPC_encoder, self).__init__()
+        super().__init__()
 
         self.conv_layer_1 = Conv1d(in_channels=conv_1_in_dim, out_channels=conv_1_out_dim, kernel_size=conv_1_kernel_size,
                                    stride=conv_1_stride, padding=conv_1_padding)
@@ -117,7 +117,7 @@ class CPC_encoder_mlp(Module):
                  normalization_type = 'batchnorm',
                  dropout = 0.2):
 
-        super(CPC_encoder_mlp, self).__init__()
+        super().__init__()
         
         if normalization_type == 'batchnorm':
             normalization_layer = BatchNorm1d
@@ -171,7 +171,7 @@ class CPC_autoregressive_model(Module):
     
     def __init__(self, encoding_dim = 512, output_dim = 256, num_layers = 1):
 
-        super(CPC_autoregressive_model, self).__init__()
+        super().__init__()
         
         self.cpc_ar = GRU(input_size=encoding_dim, hidden_size=output_dim, num_layers=num_layers, batch_first=True, bidirectional=False)
 
@@ -207,7 +207,7 @@ class CPC_postnet(Module):
     
     def __init__(self, encoding_dim = 512, ar_model_output_dim = 256, future_predicted_timesteps = 12):
 
-        super(CPC_postnet, self).__init__()
+        super().__init__()
         
         # We first determine whether our future_predicted_timesteps is a number or a list of numbers.
         if isinstance(future_predicted_timesteps, int):

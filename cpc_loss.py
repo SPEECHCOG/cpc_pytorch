@@ -37,7 +37,7 @@ class CPC_loss_no_classes(Module):
     """
     
     def __init__(self, future_predicted_timesteps=12):
-        super(CPC_loss_no_classes, self).__init__()
+        super().__init__()
         
         # We first determine whether our future_predicted_timesteps is a number or a list of numbers.
         if isinstance(future_predicted_timesteps, int):
@@ -102,7 +102,7 @@ class CPC_loss(Module):
     """
     
     def __init__(self, future_predicted_timesteps=12):
-        super(CPC_loss, self).__init__()
+        super().__init__()
         
         # We first determine whether our future_predicted_timesteps is a number or a list of numbers.
         if isinstance(future_predicted_timesteps, int):
