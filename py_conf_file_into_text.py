@@ -26,7 +26,8 @@ def convert_py_conf_file_to_text(conf_file_name):
                     if not multiline_comment:
                         if len(line.rstrip()) > 2:
                             if line.rstrip()[0:3] == '"""' or line.rstrip()[0:3] == "'''":
-                                multiline_comment = 1
+                                if line.rstrip().count('"""') == 1 or line.rstrip().count("'''") == 1:
+                                    multiline_comment = 1
                             else:
                                 lines.append(line.rstrip())
                         else:
@@ -34,6 +35,7 @@ def convert_py_conf_file_to_text(conf_file_name):
                     else:
                         if len(line.rstrip()) > 2:
                             if line.rstrip()[0:3] == '"""' or line.rstrip()[0:3] == "'''":
-                                multiline_comment = 0
+                                if line.rstrip().count('"""') == 1 or line.rstrip().count("'''") == 1:
+                                    multiline_comment = 0
             
     return lines
