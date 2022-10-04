@@ -35,3 +35,5 @@ for conf_file in conf_file_names:
     os.system(f'echo "using configuration file {conf_file} (see log file of {conf_file} for further details)"')
     os.system(f'python train_cpc_model.py {os.path.join(dir_of_conf_files, conf_file)}')
     conf_file_index += 1
+os.system('echo "All experiments completed!"')
+
