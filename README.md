@@ -3,9 +3,9 @@
 This repository contains a pipeline for training and evaluating contrastive predictive coding (CPC, see e.g. https://arxiv.org/abs/1807.03748) models, which has been implemented using PyTorch.
 
 **The present CPC implementation has been (partially) used in the following publication:**
-[E. Vaaras, M. Airaksinen, and O. Räsänen, "Analysis of Self-Supervised Learning and Dimensionality Reduction Methods in Clustering-Based Active Learning for Speech Emotion Recognition," in _Proc. INTERSPEECH 2022_](https://arxiv.org/abs/2206.10188).
+[E. Vaaras, M. Airaksinen, and O. Räsänen, "Analysis of Self-Supervised Learning and Dimensionality Reduction Methods in Clustering-Based Active Learning for Speech Emotion Recognition," in _Proc. INTERSPEECH 2022_](https://www.isca-speech.org/archive/interspeech_2022/vaaras22_interspeech.html).
 
-If you use the present code or its derivatives, please cite the [repository URL](https://github.com/SPEECHCOG/cpc_pytorch) and/or the [aforementioned publication](https://arxiv.org/abs/2206.10188).
+If you use the present code or its derivatives, please cite the [repository URL](https://github.com/SPEECHCOG/cpc_pytorch) and/or the [aforementioned publication](https://www.isca-speech.org/archive/interspeech_2022/vaaras22_interspeech.html).
 
 ## Repository contents
 - `conf_train_cpc_model.py` and `conf_train_cpc_model_orig_implementation.py`: Example configuration files for training baseline models.
