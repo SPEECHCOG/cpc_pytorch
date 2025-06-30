@@ -1,6 +1,6 @@
 # A PyTorch implementation of Contrastive Predictive Coding (CPC)
 
-This repository contains a pipeline for training and evaluating models trained using contrastive predictive coding (CPC, see e.g. https://arxiv.org/abs/1807.03748). The code has been implemented using PyTorch.
+This repository contains a pipeline for training models using contrastive predictive coding (CPC, see e.g. https://arxiv.org/abs/1807.03748) and evaluating their performance. The code has been implemented using PyTorch.
 
 **The present CPC implementation has been (partially) used in the following publication:**
 [E. Vaaras, M. Airaksinen, and O. Räsänen, "Analysis of Self-Supervised Learning and Dimensionality Reduction Methods in Clustering-Based Active Learning for Speech Emotion Recognition," in _Proc. INTERSPEECH 2022_](https://www.isca-speech.org/archive/interspeech_2022/vaaras22_interspeech.html).
